@@ -12,6 +12,7 @@ import csv
 from . models import *
 from . serializer import *
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -141,124 +142,109 @@ getSeverityDict()
 getDescription()
 getprecautionDict()
 
-
-# ---------------------------------------- Disease Prediction API EndPoints-------------------------------------------
-
-class SymptomApiEndPoint(APIView):
+@api_view()
+def getSymptoms(request):
+    try:
+        symptom = request.GET.get('symptom')
+        print(symptom,type(symptom),"hii")
+        features=",".join(cols).split(",")
+        input_data = symptom.replace(" ","_")
+        conf,cnf_dis=check_pattern(features,input_data)
+        result = ""
+        if conf==1:
+            result += "searches related to input: "+"\n"
+            for num,it in enumerate(cnf_dis):
+                result += str(num) + ")" + it + "\n"
+            if num!=0:
+                result += "Type the symptom you meant from the above to confirm:  " + "\n"
+            else:
+                result += "Confirm by typing the above symptom again:  " + "\n"
+        else:
+            result += "Enter valid symptom."
+        print(result)
+        return Response(result)
+    except:
+        return Response("An error occured. Please try again later.")
     
-        serializer_class = SymptomSerializer
-        
-        def post(self, request, format=None):
-            serializer = SymptomSerializer(data=request.data)
-            if serializer.is_valid():
-                print(serializer.data)
-                input_data = serializer.data
-                print(input_data["symptom"])
-                print("hii")
-                features=",".join(cols).split(",")
-                input_data = input_data["symptom"].replace(" ","_")
-                conf,cnf_dis=check_pattern(features,input_data)
-                result = ""
-                if conf==1:
-                    result += "searches related to input: "+"\n"
-                    for num,it in enumerate(cnf_dis):
-                        result += str(num) + ")" + it + "\n"
-                    if num!=0:
-                        result += "Type the symptom you meant from the above to confirm:  " + "\n"
-                    else:
-                        result += "Confirm by typing the above symptom again:  " + "\n"
+
+@api_view()
+def getQNA(request):
+    try:
+        symptom = request.GET.get('symptom')
+        print(symptom,type(symptom),"hii")
+        input_data = symptom.replace(" ","_")
+        tree_ = clf_model.tree_
+        feature_name = [
+            cols[i] if i != _tree.TREE_UNDEFINED else "undefined!"
+            for i in tree_.feature
+        ]
+        symptoms_present = []
+        def recurse(node, depth):
+            indent = "  " * depth
+            print(indent,"indent")
+            if tree_.feature[node] != _tree.TREE_UNDEFINED:
+                print(tree_.feature[node],"dekho")
+                name = feature_name[node]
+                threshold = tree_.threshold[node]
+                if name == input_data:
+                    val = 1
                 else:
-                    result += "Enter valid symptom."
-                return Response(result)
-            
-
-class QNAApiEndPoint(APIView):
-    
-        serializer_class = ConfirmSymptomSerializer
-        
-        def post(self, request, format=None):
-            serializer = ConfirmSymptomSerializer(data=request.data)
-            if serializer.is_valid():
-                print(serializer.data)
-                input_data = serializer.data
-                print(input_data["confirm_symptom"])
-                input_data = input_data["confirm_symptom"].replace(" ","_")
-                tree_ = clf_model.tree_
-                feature_name = [
-                    cols[i] if i != _tree.TREE_UNDEFINED else "undefined!"
-                    for i in tree_.feature
-                ]
-                symptoms_present = []
-                def recurse(node, depth):
-                    indent = "  " * depth
-                    print(indent,"indent")
-                    if tree_.feature[node] != _tree.TREE_UNDEFINED:
-                        print(tree_.feature[node],"dekho")
-                        name = feature_name[node]
-                        threshold = tree_.threshold[node]
-                        if name == input_data:
-                            val = 1
-                        else:
-                            val = 0
-                        if  val <= threshold:
-                            return recurse(tree_.children_left[node], depth + 1)
-                        else:
-                            symptoms_present.append(name)
-                            return recurse(tree_.children_right[node], depth + 1)
-                    else:
-                        pres_disease = print_disease(tree_.value[node])
-                        red_cols = reduced_data.columns 
-                        symptoms_given = red_cols[reduced_data.loc[pres_disease].values[0].nonzero()]
-                        result = "Are you experiencing any " + "\n"
-                        for syms in list(symptoms_given):
-                            print(syms, "ksjj")
-                            result += syms+"? : \n"
-                            
-                        result += "Please type all that applies in the format : eg. cold, fatigue, headache " + "\n"
-                        return result,pres_disease
-                result,pres = recurse(0, 1)
-                print(pres[0],"pres")
-                disease = PresentDisease(disease=str(pres[0]))
-                disease.save()
-                return Response(result)
-            
-
-class DiseasePredictionApiEndPoint(APIView):
-    
-        serializer_class = QNASerializer
-        
-        def post(self, request, format=None):
-            serializer = QNASerializer(data=request.data)
-            if serializer.is_valid():
-                print(serializer.data)
-                input_data = serializer.data
-                print(input_data["answers"])
-                print("hii")
-                present_disease = PresentDisease.objects.all().order_by('-id')[:1]
-                print(present_disease[0].disease,"present_disease")
-                symptoms_exp = input_data["answers"].split(", ")
-                symptoms_exp = [item.replace(" ", "_") for item in symptoms_exp]
-                print(symptoms_exp)
-                result = ""
-                second_prediction=sec_predict(symptoms_exp)
-                if(present_disease[0].disease==second_prediction[0]):
-                    result += "You may have " + present_disease[0].disease + "\n"
-                    result += description_list[present_disease[0].disease] + "\n"
+                    val = 0
+                if  val <= threshold:
+                    return recurse(tree_.children_left[node], depth + 1)
                 else:
-                    result += "You may have " + present_disease[0].disease + "or " + second_prediction[0] + "\n"
-                    result += description_list[present_disease[0].disease] + "\n"
-                    result += description_list[second_prediction[0]] + "\n"
-
-                precution_list1=precautionDictionary[present_disease[0].disease]
-                precution_list2=precautionDictionary[second_prediction[0]]
-                result += "Take following measures for" + present_disease[0].disease +" : " + "\n"
-                for  i,j in enumerate(precution_list1):
-                    result += str(i+1) + ")" +j + "\n"
+                    symptoms_present.append(name)
+                    return recurse(tree_.children_right[node], depth + 1)
+            else:
+                pres_disease = print_disease(tree_.value[node])
+                red_cols = reduced_data.columns 
+                symptoms_given = red_cols[reduced_data.loc[pres_disease].values[0].nonzero()]
+                result = "Are you experiencing any " + "\n"
+                for syms in list(symptoms_given):
+                    print(syms, "ksjj")
+                    result += syms+"? : \n"
                 
-                if(present_disease[0].disease!=second_prediction[0]):
-                    result += "Take following measures for" + second_prediction[0] +" : " + "\n"
-                    for  i,j in enumerate(precution_list2):
-                        result += str(i+1) + ")" +j + "\n"
+                return result,pres_disease
+        result,pres = recurse(0, 1)
+        print(pres[0],"pres")
+        disease = PresentDisease(disease=str(pres[0]))
+        disease.save()
+        return Response(result)
+    except:
+        return Response("An error occured. Please try again later.")
+    
 
-                return Response(result)
+@api_view()
+def getDiagnosis(request):
+    try:
+        answer = request.GET.get('answer')
+        print(answer,"answer")
+        present_disease = PresentDisease.objects.all().order_by('-id')[:1]
+        print(present_disease[0].disease,"present_disease")
+        symptoms_exp = answer.split(", ")
+        symptoms_exp = [item.replace(" ", "_") for item in symptoms_exp]
+        print(symptoms_exp)
+        result = ""
+        second_prediction=sec_predict(symptoms_exp)
+        if(present_disease[0].disease==second_prediction[0]):
+            result += "You may have " + present_disease[0].disease + "\n"
+            result += description_list[present_disease[0].disease] + "\n"
+        else:
+            result += "You may have " + present_disease[0].disease + "or " + second_prediction[0] + "\n"
+            result += description_list[present_disease[0].disease] + "\n"
+            result += description_list[second_prediction[0]] + "\n"
+
+        precution_list1=precautionDictionary[present_disease[0].disease]
+        precution_list2=precautionDictionary[second_prediction[0]]
+        result += "Take following measures for" + present_disease[0].disease +" : " + "\n"
+        for  i,j in enumerate(precution_list1):
+            result += str(i+1) + ")" +j + "\n"
+        
+        if(present_disease[0].disease!=second_prediction[0]):
+            result += "Take following measures for" + second_prediction[0] +" : " + "\n"
+            for  i,j in enumerate(precution_list2):
+                result += str(i+1) + ")" +j + "\n"
+        return Response(result)
+    except:
+        return Response("An error occured. Please try again later.")
 
