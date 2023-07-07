@@ -10,17 +10,20 @@ from sklearn.model_selection import cross_val_score
 from sklearn.svm import SVC
 import csv
 from . models import *
-from . serializer import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+import os
 
 
 #-------------------------------------------- mongodb connection --------------------------------------------
 
-connection_string = "mongodb+srv://vaidyah:vaidyah123@cluster0.jbnvywb.mongodb.net/?retryWrites=true&w=majority"
+# use env file to get the username and password
+username = os.environ.get('MONGO_USERNAME')
+password = os.environ.get('MONGO_PASSWORD')
+connection_string = f"mongodb+srv://{username}:{password}@cluster0.jbnvywb.mongodb.net/?retryWrites=true&w=majority"
 
 client  = pymongo.MongoClient(connection_string)
 
