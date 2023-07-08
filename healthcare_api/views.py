@@ -155,9 +155,9 @@ def getSymptoms(request):
         else:
             result += "Enter valid symptom."
         print(result)
-        return Response(result)
+        return Response({'data':result})
     except:
-        return Response("An error occured. Please try again later.")
+        return Response({'data':"An error occured. Please try again later."})
     
 
 @api_view()
@@ -202,9 +202,9 @@ def getQNA(request):
         print(pres[0],"pres")
         disease = PresentDisease(disease=str(pres[0]))
         disease.save()
-        return Response(result)
+        return Response({'data':result})
     except:
-        return Response("An error occured. Please try again later.")
+        return Response({'data':"An error occured. Please try again later."})
     
 
 @api_view()
@@ -237,9 +237,9 @@ def getDiagnosis(request):
             result += "Take following measures for" + second_prediction[0] +" : " + "\n"
             for  i,j in enumerate(precution_list2):
                 result += str(i+1) + ")" +j + "\n"
-        return Response(result)
+        return Response({'data':result})
     except:
-        return Response("An error occured. Please try again later.")
+        return Response({'data':"An error occured. Please try again later."})
 
 
 @api_view()
