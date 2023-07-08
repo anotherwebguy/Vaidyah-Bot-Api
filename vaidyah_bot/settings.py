@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'healthcare_api.apps.HealthcareApiConfig',
+    'info_api.apps.InfoApiConfig',
     'rest_framework',
     'corsheaders',
 ]
