@@ -4,6 +4,7 @@ from healthcare_api.views import *
 
 urlpatterns = [
     path('symptom/', views.getSymptoms, name='symptom'),
-    # path('qna/', views.getQNA, name='qna'),
+    path('qna/', views.getQNA, name='qna'),
     path('disease/', views.getDiagnosis, name='disease'),
+    path('temp/', views.gettemp, name='temp'),
 ]

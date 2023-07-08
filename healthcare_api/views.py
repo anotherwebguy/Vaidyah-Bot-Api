@@ -1,5 +1,4 @@
 from django.shortcuts import render
-import pymongo
 import re
 import pandas as pd
 from sklearn import preprocessing
@@ -17,15 +16,6 @@ import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 import os
 
-
-#-------------------------------------------- mongodb connection --------------------------------------------
-
-# use env file to get the username and password
-username = os.environ.get('MONGO_USERNAME')
-password = os.environ.get('MONGO_PASSWORD')
-connection_string = f"mongodb+srv://{username}:{password}@cluster0.jbnvywb.mongodb.net/?retryWrites=true&w=majority"
-
-client  = pymongo.MongoClient(connection_string)
 
 #-------------------------------------------- diseas-symptoms ml model --------------------------------------------
 data = pd.read_csv("datasets/disease_symptoms/disease-symptoms.csv")
@@ -170,51 +160,51 @@ def getSymptoms(request):
         return Response("An error occured. Please try again later.")
     
 
-# @api_view()
-# def getQNA(request):
-#     try:
-#         symptom = request.GET.get('symptom')
-#         print(symptom,type(symptom),"hii")
-#         input_data = symptom.replace(" ","_")
-#         tree_ = clf_model.tree_
-#         feature_name = [
-#             cols[i] if i != _tree.TREE_UNDEFINED else "undefined!"
-#             for i in tree_.feature
-#         ]
-#         symptoms_present = []
-#         def recurse(node, depth):
-#             indent = "  " * depth
-#             print(indent,"indent")
-#             if tree_.feature[node] != _tree.TREE_UNDEFINED:
-#                 print(tree_.feature[node],"dekho")
-#                 name = feature_name[node]
-#                 threshold = tree_.threshold[node]
-#                 if name == input_data:
-#                     val = 1
-#                 else:
-#                     val = 0
-#                 if  val <= threshold:
-#                     return recurse(tree_.children_left[node], depth + 1)
-#                 else:
-#                     symptoms_present.append(name)
-#                     return recurse(tree_.children_right[node], depth + 1)
-#             else:
-#                 pres_disease = print_disease(tree_.value[node])
-#                 red_cols = reduced_data.columns 
-#                 symptoms_given = red_cols[reduced_data.loc[pres_disease].values[0].nonzero()]
-#                 result = "Are you experiencing any " + "\n"
-#                 for syms in list(symptoms_given):
-#                     print(syms, "ksjj")
-#                     result += syms+"? : \n"
+@api_view()
+def getQNA(request):
+    try:
+        symptom = request.GET.get('symptom')
+        print(symptom,type(symptom),"hii")
+        input_data = symptom.replace(" ","_")
+        tree_ = clf_model.tree_
+        feature_name = [
+            cols[i] if i != _tree.TREE_UNDEFINED else "undefined!"
+            for i in tree_.feature
+        ]
+        symptoms_present = []
+        def recurse(node, depth):
+            indent = "  " * depth
+            print(indent,"indent")
+            if tree_.feature[node] != _tree.TREE_UNDEFINED:
+                print(tree_.feature[node],"dekho")
+                name = feature_name[node]
+                threshold = tree_.threshold[node]
+                if name == input_data:
+                    val = 1
+                else:
+                    val = 0
+                if  val <= threshold:
+                    return recurse(tree_.children_left[node], depth + 1)
+                else:
+                    symptoms_present.append(name)
+                    return recurse(tree_.children_right[node], depth + 1)
+            else:
+                pres_disease = print_disease(tree_.value[node])
+                red_cols = reduced_data.columns 
+                symptoms_given = red_cols[reduced_data.loc[pres_disease].values[0].nonzero()]
+                result = "Are you experiencing any " + "\n"
+                for syms in list(symptoms_given):
+                    print(syms, "ksjj")
+                    result += syms+"? : \n"
                 
-#                 return result,pres_disease
-#         result,pres = recurse(0, 1)
-#         print(pres[0],"pres")
-#         disease = PresentDisease(disease=str(pres[0]))
-#         disease.save()
-#         return Response(result)
-#     except:
-#         return Response("An error occured. Please try again later.")
+                return result,pres_disease
+        result,pres = recurse(0, 1)
+        print(pres[0],"pres")
+        disease = PresentDisease(disease=str(pres[0]))
+        disease.save()
+        return Response(result)
+    except:
+        return Response("An error occured. Please try again later.")
     
 
 @api_view()
@@ -251,3 +241,7 @@ def getDiagnosis(request):
     except:
         return Response("An error occured. Please try again later.")
 
+
+@api_view()
+def gettemp(request):
+    return Response("Hello World")
