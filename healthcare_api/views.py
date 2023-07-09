@@ -143,12 +143,11 @@ def getSymptoms(request):
         features=",".join(cols).split(",")
         input_data = symptom.replace(" ","_")
         conf,cnf_dis=check_pattern(features,input_data)
-        result = ""
+        result = []
         if conf==1:
             for num,it in enumerate(cnf_dis):
-                result += it + "\n"
-        print(result)
-        result = result.rstrip("\n")
+                result.append(it)
+        print(result,"lala")
         return Response({'data':result})
     except:
         return Response({'data':"Enter Valid Symptom"})
