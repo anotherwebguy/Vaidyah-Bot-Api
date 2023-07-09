@@ -185,10 +185,9 @@ def getQNA(request):
                 pres_disease = print_disease(tree_.value[node])
                 red_cols = reduced_data.columns 
                 symptoms_given = red_cols[reduced_data.loc[pres_disease].values[0].nonzero()]
-                result = "Are you experiencing any " + "\n"
+                result = []
                 for syms in list(symptoms_given):
-                    print(syms, "ksjj")
-                    result += syms+"? : \n"
+                    result.append(syms)
                 
                 return result,pres_disease
         result,pres = recurse(0, 1)
