@@ -186,15 +186,17 @@ def getQNA(request):
                 red_cols = reduced_data.columns 
                 symptoms_given = red_cols[reduced_data.loc[pres_disease].values[0].nonzero()]
                 result = []
+                count = []
                 for syms in list(symptoms_given):
                     result.append(syms)
-                
-                return result,pres_disease
-        result,pres = recurse(0, 1)
+                for i in range(len(symptoms_given)):
+                    count.append(i+1)
+                return result,pres_disease,count
+        result,pres,count = recurse(0, 1)
         print(pres[0],"pres")
         disease = PresentDisease(disease=str(pres[0]))
         disease.save()
-        return Response({'data':result})
+        return Response({'data':result,'count': count})
     except:
         return Response({'data':"An error occured. Please try again later."})
     
