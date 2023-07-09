@@ -120,7 +120,7 @@ def sec_predict(symptoms_exp):
     input_vector = np.zeros(len(symptoms_dict))
     for item in symptoms_exp:
       input_vector[[symptoms_dict[item]]] = 1
-
+      
     return rf_clf.predict([input_vector])
 
 
@@ -145,19 +145,12 @@ def getSymptoms(request):
         conf,cnf_dis=check_pattern(features,input_data)
         result = ""
         if conf==1:
-            result += "searches related to input: "+"\n"
             for num,it in enumerate(cnf_dis):
                 result += str(num) + ")" + it + "\n"
-            if num!=0:
-                result += "Type the symptom you meant from the above to confirm:  " + "\n"
-            else:
-                result += "Confirm by typing the above symptom again:  " + "\n"
-        else:
-            result += "Enter valid symptom."
         print(result)
         return Response({'data':result})
     except:
-        return Response({'data':"An error occured. Please try again later."})
+        return Response({'data':"Enter Valid Symptom"})
     
 
 @api_view()
