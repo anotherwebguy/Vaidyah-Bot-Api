@@ -209,7 +209,7 @@ def getDiagnosis(request):
         print(answer,"answer")
         present_disease = PresentDisease.objects.all().order_by('-id')[:1]
         print(present_disease[0].disease,"present_disease")
-        symptoms_exp = answer.split(", ")
+        symptoms_exp = answer.split(" , ")
         symptoms_exp = [item.replace(" ", "_") for item in symptoms_exp]
         print(symptoms_exp)
         result = ""
