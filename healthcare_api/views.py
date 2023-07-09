@@ -190,13 +190,14 @@ def getQNA(request):
                 for syms in list(symptoms_given):
                     result.append(syms)
                 for i in range(len(symptoms_given)):
-                    count.append(i+1)
-                return result,pres_disease,count
-        result,pres,count = recurse(0, 1)
+                    count.append(str(i+1))
+                result = [[x, y] for x, y in zip(count, result)]
+                return result,pres_disease
+        result,pres = recurse(0, 1)
         print(pres[0],"pres")
         disease = PresentDisease(disease=str(pres[0]))
         disease.save()
-        return Response({'data':result,'count': count})
+        return Response({'data':result})
     except:
         return Response({'data':"An error occured. Please try again later."})
     
