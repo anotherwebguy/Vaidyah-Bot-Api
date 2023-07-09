@@ -148,6 +148,7 @@ def getSymptoms(request):
             for num,it in enumerate(cnf_dis):
                 result += it + "\n"
         print(result)
+        result = result.rstrip("\n")
         return Response({'data':result})
     except:
         return Response({'data':"Enter Valid Symptom"})
