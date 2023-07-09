@@ -146,7 +146,7 @@ def getSymptoms(request):
         result = ""
         if conf==1:
             for num,it in enumerate(cnf_dis):
-                result += str(num) + ")" + it + "\n"
+                result += it + "\n"
         print(result)
         return Response({'data':result})
     except:
