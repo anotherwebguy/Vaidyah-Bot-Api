@@ -7,6 +7,7 @@ from urllib.parse import urlencode
 
 env_vars = dotenv_values(".env")
 api_key = env_vars['PLACES_API_KEY']
+ip_geoloc_apikey = env_vars['IP_GEOLOCATION_API_KEY']
 
 # Create your views here.
 
@@ -15,7 +16,11 @@ def getNearbyHospitals(request):
     try:
         val = request.GET.get('val')
         print(val)
-        lat,long = val.split(' , ')
+        ip_url = f"https://geo.ipify.org/api/v1?apiKey={ip_geoloc_apikey}&ipAddress={val}"
+        ip_response = requests.get(ip_url)
+        ip_data = ip_response.json()
+        lat = ip_data['location']['lat']
+        long = ip_data['location']['lng']
         print(lat,long)
         url = "https://api.foursquare.com/v3/places/search"
         params = {

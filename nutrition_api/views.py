@@ -40,13 +40,13 @@ def getFoodNutrients(request):
                     food['serving_unit'],
                     str(food['serving_qty']),
                     str(food['nf_calories']),
+                    str(food['nf_protein']),
                     str(food['nf_total_fat']),
                     str(food['nf_cholesterol']),
-                    str(food['nf_protein']),
                 ]
                 for food in res['foods']
             ]
-            return Response(result)
+            return Response({'data': result})
         else:
             # Request failed
             print("Error:", response.status_code)
@@ -88,7 +88,7 @@ def getExercise(request):
                 ]
                 for exer in res['exercises']
             ]
-            return Response(result)
+            return Response({'data':result})
         else:
             # Request failed
             print("Error:", response.status_code)
