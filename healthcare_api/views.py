@@ -51,7 +51,6 @@ symptoms_dict = {}
 for index, symptom in enumerate(x):
        symptoms_dict[symptom] = index
 
-print(symptoms_dict)
 
 def calc_condition(exp,days):
     sum=0
@@ -215,12 +214,12 @@ def getDiagnosis(request):
         result = ""
         second_prediction=sec_predict(symptoms_exp)
         if(present_disease[0].disease==second_prediction[0]):
-            result += "You may have " + present_disease[0].disease + "\n"
-            result += description_list[present_disease[0].disease] + "\n"
+            result += "You may have " + present_disease[0].disease + "\n\n"
+            result += description_list[present_disease[0].disease] + "\n\n"
         else:
-            result += "You may have " + present_disease[0].disease + "or " + second_prediction[0] + "\n"
-            result += description_list[present_disease[0].disease] + "\n"
-            result += description_list[second_prediction[0]] + "\n"
+            result += "You may have " + present_disease[0].disease + "or " + second_prediction[0] + "\n\n"
+            result += description_list[present_disease[0].disease] + "\n\n"
+            result += description_list[second_prediction[0]] + "\n\n"
 
         precution_list1=precautionDictionary[present_disease[0].disease]
         precution_list2=precautionDictionary[second_prediction[0]]

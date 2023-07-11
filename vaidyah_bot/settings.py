@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'healthcare_api.apps.HealthcareApiConfig',
     'info_api.apps.InfoApiConfig',
+    'nutrition_api.apps.NutritionApiConfig',
+    'places_api.apps.PlacesApiConfig',
+    'calories_api.apps.CaloriesApiConfig',
     'rest_framework',
     'corsheaders',
 ]
