@@ -30,6 +30,8 @@ def getDailyCalories(request):
         print(calories)
         calories = round(calories)
         print(calories)
-        return Response({'calories':calories})
+        loss = calories - 500
+        gain = calories + 500
+        return Response({'calories':calories,'loss':loss,'gain':gain})
     except:
         return Response("Something went wrong. Please try again later.")
