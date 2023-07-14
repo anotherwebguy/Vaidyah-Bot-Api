@@ -1,0 +1,71 @@
+{% extends 'base.html' %} 
+
+{% block body %}
+<div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card">
+          <img src={{recipe.image_link}} class="card-img-top justify-text-center" alt="Image" style="width: 300px; height: 300px;">
+          <div class="card-body">
+            <h4 class="card-title"><strong>Recipe name: <span style="color: red;">{{recipe.Name}}</span></strong></h4>
+            <p clas="card-text"><strong>Nutritional values:</strong></p>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Calories</th>
+                        <th scope="col">Fiber</th>
+                        <th scope="col">Protein</th>
+                        <th scope="col">Sugar Content</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>{{recipe.Calories}}</td>
+                    <td>{{recipe.FiberContent}}</td>
+                    <td>{{recipe.ProteinContent}}</td>
+                    <td>{{recipe.SugarContent}}</td>
+                </tr>
+            </table>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Fat</th>
+                        <th scope="col">Saturated Fat</th>
+                        <th scope="col">Cholesterol</th>
+                        <th scope="col">Carbohydrate</th>
+                        <th scope="col">Sodium</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>{{recipe.FatContent}}</td>
+                    <td>{{recipe.SaturatedFatContent}}</td>
+                    <td>{{recipe.CholesterolContent}}</td>
+                    <td>{{recipe.CarbohydrateContent}}</td>
+                    <td>{{recipe.SodiumContent}}</td>
+                </tr>
+            </table>
+
+            <p clas="card-text"><strong>Time to prepare:</strong></p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Cook Time</th>
+                        <th scope="col">Prep Time</th>
+                        <th scope="col">Total Time</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>{{recipe.CookTime}} min</td>
+                    <td>{{recipe.PrepTime}} min</td>
+                    <td>{{recipe.TotalTime}} min</td>
+                </tr>
+            </table>
+            <p class="card-text"><strong>Recipe Ingredients:</strong><br>{{recipe.RecipeIngredientParts}} .</p>
+            <br>
+            <p class="card-text"><strong>Recipe Instructions:</strong><br>{{recipe.RecipeInstructions}}.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

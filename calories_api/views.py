@@ -249,4 +249,10 @@ def generateDietPlan(request):
     return render(request, 'mealplannerhome.html', {'day1':day1_data, 'day2':day2_data, 'day3':day3_data, 'day4':day4_data, 'day5':day5_data})
 
 
+def viewDietPlan(request, id):
+    print(type(id))
+    recipe = Recipe.objects.get(RecipeId=int(id))
+    return render(request, 'mealdetail.html', {'recipe':recipe})
+
+
 # http:127.0.0.1:8000/calories_api/genrate/?day1=%5B251706%2C+251706%2C+392241%5D&day2=%5B427097%2C+427097%2C+213776%5D&day3=%5B206870%2C+206870%2C+53234%5D&day4=%5B439996%2C+439996%2C+298290%5D&day5=%5B297358%2C+297358%2C+151135%5D
