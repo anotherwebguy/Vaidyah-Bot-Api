@@ -44,6 +44,8 @@ def getDisease(request):
         if conf==1:
             for num,it in enumerate(cnf_dis):
                 result.append(it)
+        if len(result)==0:
+            return Response({'nada':"Enter Valid Disease"})
         return Response({'data':result})
     except:
         return Response({'data':"Enter Valid Symptom"})
@@ -59,6 +61,8 @@ def getSymptoms(request):
         result = []
         if document:
             result = document['symptom']
+        if len(result)==0:
+            return Response({'nada':"Enter Valid Disease"})
         return Response({'data':result})
     except:
         return Response({'data':"Enter Valid Disease"})
@@ -77,6 +81,8 @@ def getInfo(request):
         cause = document['cause']
         cure_dept = document['cure_department']
         cure_way = document['cure_way']
+        if len(name)==0:
+            return Response({'nada':"Enter Valid Disease"})
         return Response({'name':name,'desc':desc,'symptoms':symptoms,'prevent':prevent,'cause':cause,'cure_dept':cure_dept,'cure_way':cure_way})
     except:
         return Response({'data':"Enter Valid Disease"})
@@ -88,7 +94,10 @@ def getPrevention(request):
         input_data = disease
         query = {"name": input_data}
         document = collection.find_one(query)
+        result = []
         result = document['prevent']
+        if len(result)==0:
+            return Response({'nada':"Enter Valid Disease"})
         return Response({'data':result})
     except:
         return Response({'data':"Enter Valid Disease"})
@@ -100,7 +109,10 @@ def getCause(request):
         input_data = disease
         query = {"name": input_data}
         document = collection.find_one(query)
+        result = []
         result = document['cause']
+        if len(result)==0:
+            return Response({'nada':"Enter Valid Disease"})
         return Response({'data':result})
     except:
         return Response({'data':"Enter Valid Disease"})
@@ -112,7 +124,10 @@ def getDescription(request):
         input_data = disease
         query = {"name": input_data}
         document = collection.find_one(query)
+        result = []
         result = document['desc']
+        if len(result)==0:
+            return Response({'nada':"Enter Valid Disease"})
         return Response({'data':result})
     except:
         return Response({'data':"Enter Valid Disease"})

@@ -57,14 +57,14 @@ def getDailyCalories(request):
     try:
         val = request.GET.get('val')
         print(val)
-        data = val.split(' , ')
+        data = val.split(', ')
         print(data)
         # calories = 0.0
         if data[0] == 'Male':
             calories = 10 * int(data[3]) + 6.25 * int(data[2]) - 5 * int(data[1]) + 5
         else:   
             calories = 10 * int(data[3]) + 6.25 * int(data[2]) - 5 * int(data[1]) - 161
-        print(calories)
+        print(calories,type(calories))
         if data[4] == 'Sedentary':
             calories *= 1.2
         elif data[4] == 'Lightly Active':
@@ -99,7 +99,7 @@ def getDailyCalories(request):
 def getRecommendedRecipes(request):
     try:
         val = request.GET.get('val')
-        calories,weight_loss = val.split(' , ')
+        calories,weight_loss = val.split(', ')
         weight_loss = float(weight_loss)
         calories = int(calories)
         print(calories,weight_loss)

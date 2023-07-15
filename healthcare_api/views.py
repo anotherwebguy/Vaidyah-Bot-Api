@@ -147,6 +147,8 @@ def getSymptoms(request):
             for num,it in enumerate(cnf_dis):
                 result.append(it)
         print(result,"lala")
+        if len(result)==0:
+            return Response({'nada':"Enter Valid Symptom"})
         return Response({'data':result})
     except:
         return Response({'data':"Enter Valid Symptom"})
@@ -196,6 +198,8 @@ def getQNA(request):
         print(pres[0],"pres")
         disease = PresentDisease(disease=str(pres[0]))
         disease.save()
+        if len(result)==0:
+            return Response({'nada':"Enter Valid Symptom"})
         return Response({'data':result})
     except:
         return Response({'data':"An error occured. Please try again later."})
@@ -231,6 +235,8 @@ def getDiagnosis(request):
             result += "Take following measures for" + second_prediction[0] +" : " + "\n"
             for  i,j in enumerate(precution_list2):
                 result += str(i+1) + ")" +j + "\n"
+        if len(result)==0:
+            return Response({'nada':"Enter Valid Symptom"})
         return Response({'data':result})
     except:
         return Response({'data':"An error occured. Please try again later."})

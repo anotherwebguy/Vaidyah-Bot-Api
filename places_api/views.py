@@ -25,7 +25,7 @@ def getNearbyHospitals(request):
         url = "https://api.foursquare.com/v3/places/search"
         params = {
             "query": "hospital",
-            "ll": lat+","+long,
+            "ll": str(lat)+","+str(long),
             "open_now": "true",
             "sort": "DISTANCE"
         }
