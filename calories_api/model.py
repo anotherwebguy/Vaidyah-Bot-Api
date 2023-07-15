@@ -21,14 +21,14 @@ def build_pipeline(neigh,scaler,params):
     pipeline=Pipeline([('std_scaler',scaler),('NN',transformer)])
     return pipeline
 
-def extract_data(dataframe,ingredients):
-    extracted_data=dataframe.copy()
+def extract_data(extracted_data,ingredients):
     extracted_data=extract_ingredient_filtered_data(extracted_data,ingredients)
     return extracted_data
     
-def extract_ingredient_filtered_data(dataframe,ingredients):
-    extracted_data=dataframe.copy()
+def extract_ingredient_filtered_data(extracted_data,ingredients):
+    print(extracted_data.shape)
     regex_string=''.join(map(lambda x:f'(?=.*{x})',ingredients))
+    print(regex_string)
     extracted_data=extracted_data[extracted_data['RecipeIngredientParts'].str.contains(regex_string,regex=True,flags=re.IGNORECASE)]
     return extracted_data
 
@@ -54,8 +54,7 @@ def extract_quoted_strings(s):
 
 def output_recommended_recipes(dataframe):
     if dataframe is not None:
-        output=dataframe.copy()
-        output=output.to_dict("records")
+        output=dataframe.to_dict("records")
         for recipe in output:
             recipe['RecipeIngredientParts']=extract_quoted_strings(recipe['RecipeIngredientParts'])
             recipe['RecipeInstructions']=extract_quoted_strings(recipe['RecipeInstructions'])
