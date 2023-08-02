@@ -19,7 +19,7 @@ With a wide range of functionalities, Vaidyah provides valuable information and 
 1. <b>Disease Identification based on Symptoms</b>:    Vaidyah leverages its advanced machine lea
 2. rning capabilities to analyze your symptoms and provide accurate disease identification.
 3. <b>Disease Information and Prevention</b>:    Stay informed about diseases with Vaidyah's comprehensive database of medical information. From symptoms and risk factors to preventive measures, Vaidyah equips you with the knowledge needed to protect yourself and your loved ones.
-4. <b>Calorie Calculator and Personalized Diet Plan</b>:    Achieve your fitness goals with ease using Vaidyah's personalized calorie calculator. It assesses your individual needs and offers a tailored diet plan, ensuring you maintain a balanced and healthy lifestyle.
+4. <b>Calorie Calculator and Personalized Diet Plan</b>:    Achieve your fitness goals with ease using Vaidyah's personalized calorie calculator. It assesses your individual needs and offers a tailored diet plan using machine learning, ensuring you maintain a balanced and healthy lifestyle.
 5. <b>Nutrition Information on Food Consumed</b>:    Vaidyah acts as your virtual nutritionist, providing detailed nutritional information on the foods you consume. Simply input your meals, and Vaidyah will help you make mindful dietary choices.
 6. <b>Find Nearby Hospitals and Medical Centers</b>:    Vaidyah can locate nearby hospitals and medical centers. 
 7. <b>FAQs on Healthcare</b>:     Vaidyah offers a curated list of frequently asked questions related to healthcare
