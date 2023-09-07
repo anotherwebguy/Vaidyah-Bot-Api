@@ -37,9 +37,7 @@ With a wide range of functionalities, Vaidyah provides valuable information and 
 ## Demo Video
 [(Back to top)](#list-of-contents) <br><br>
 
-[<img src="https://github.com/anotherwebguy/Vaidyah-Bot-Api/assets/66346161/c733b6d5-0444-4bad-9542-6a195c945644" width="50%">](https://www.youtube.com/watch?v=wiCEnYKxfmw)
-
-
+[<img src="https://imgs.search.brave.com/k5EOFI6_mdR4V4ixQe1lnYrZrUacSdbfho0WrKbQabk/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG9yaWFudC5jb20v/Y2RuL2ZmL18wUDdE/REJsODk1SG5tLUVs/ejNRcUxzN2ZJMGZB/LTFZYTE4TGZpOExm/bjQvMTYwMjE4Mjkw/OC9wdWJsaWMvMjAy/MC0xMC9ib3RfVGh1/bWJuYWlsLmpwZw" width="50%">](https://www.youtube.com/watch?v=wiCEnYKxfmw "Vaidyah Bot")
 
 ----
 
