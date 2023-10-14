@@ -41,4 +41,4 @@ With a wide range of functionalities, Vaidyah provides valuable information and 
 
 ----
 
-### This repository consists of the api endpoints that are used in the Vaidyah Bot built on Kore.ai
+#### This repository consists of the api endpoints that are used in the [Vaidyah Bot](https://github.com/anotherwebguy/Vaidyah-Bot) built on Kore.ai
